@@ -1,1 +1,1 @@
-This repo is my typcal fresh start for an AngularJS project indluding the node js http server code and luncher.
+Created and Subbmitted by Ben Diamant (ibendev3@gmail.com)

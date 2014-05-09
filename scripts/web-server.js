@@ -47,12 +47,6 @@ function HttpServer(handlers) {
 HttpServer.prototype.start = function (port) {
     this.port = port;
     this.server.listen(port);
-    util.puts('**WARNING** This exposes an unsecure webserver on port ' + port + '!');
-    util.puts('**WARNING** While this server is running it will allow anyone with ');
-    util.puts('**WARNING** access to port ' + port + ' to write to your filesystem!');
-    util.puts('**WARNING** While some care has been taken to prevent access outside of the ');
-    util.puts('**WARNING** test app area, precautions should be taken to prevent');
-    util.puts('**WARNING** external access to this port.');
     util.puts('Http Server running at http://localhost:' + port + '/');
 };
 

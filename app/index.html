@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Komoona's Statistics Assignment</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="navbar-header">
+        <span class="navbar-brand">Komoona Stats</span>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-main" ng-controller="HeaderController">
+        <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+            <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
+            <li ng-class="{ active: isActive('/dailyView')}"><a href="/dailyView">Daily Volume</a></li>
+            <li ng-class="{ active: isActive('/cats')}"><a href="/other">Other Volume</a></li>
+        </ul>
+    </div>
+
+
+    <ng-view>
+
+
+    </ng-view>
+
+</div>
+
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/bootstrap.min.js"></script>
+<script src="/lib/angular/angular.js"></script>
+<script src="/lib/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="/js/app.js"></script>
+<script src="/js/controllers/dailyController.js"></script>
+<script src="/js/controllers/headerController.js"></script>
+</body>
+</html>
