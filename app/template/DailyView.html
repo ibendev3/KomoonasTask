@@ -1,1 +1,7 @@
-test daily
+<select class="form-control" ng-change="selectChart(chartType)" id="chartType" ng-model="chartType" ng-options="c.typeName for c in chartTypes">
+</select>
+<button class="btn" ng-click="drawChart()">Draw!</button>
+<div id="chartdiv" google-chart>
+
+
+</div>

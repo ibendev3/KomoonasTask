@@ -1,8 +1,6 @@
 'use strict';
 
-google.load('visualization', '1', {
-    packages: ['corechart']
-});
+google.load('visualization', '1', {packages:['corechart']});
 
 google.setOnLoadCallback(function() {
     angular.bootstrap(document.body, ['KomoonaStatsApp']);

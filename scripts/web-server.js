@@ -1,15 +1,11 @@
 #!/usr/bin/env node
 
-/**
- * web-server.js Borrowed from angularjs.org tutorial
- * modified to allow posting
- */
-
 var util = require('util'),
     http = require('http'),
     fs = require('fs'),
     url = require('url'),
-    events = require('events');
+    events = require('events'),
+    restserver = require('./rest-api');;
 
 var DEFAULT_PORT = 8000;
 
@@ -48,6 +44,7 @@ HttpServer.prototype.start = function (port) {
     this.port = port;
     this.server.listen(port);
     util.puts('Http Server running at http://localhost:' + port + '/');
+    restserver.start();
 };
 
 HttpServer.prototype.parseUrl_ = function (urlString) {
