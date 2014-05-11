@@ -1,7 +1,9 @@
 var restify = require('restify');
+var statisticsHandler = require('./stats-handler');
+
 
 function respond(req, res, next) {
-    retrieveKomoonasData(res);
+    res.end(JSON.stringify(statisticsHandler.getJson()));
 }
 
 var startServer = function startRestServer() {
