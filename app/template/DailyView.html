@@ -1,6 +1,13 @@
-<select class="form-control" ng-change="selectChart(chartType)" id="chartType" ng-model="chartType" ng-options="c.typeName for c in chartTypes">
+<select class="form-control" ng-change="selectDay(dayDisplayed)" id="dayDisplayed" ng-model="dayDisplayed"
+        ng-options="c for c in daysData">
 </select>
-<button class="btn" ng-click="drawChart()">Draw!</button>
+
+<select class="multiselect" id="tagIds" multiple="multiple" multi-select>
+    <option ng-repeat="tag in tagsList" value="{{tag}}">{{tag}}</option>
+</select>
+
+
+
 <div id="chartdiv" google-chart>
 
 

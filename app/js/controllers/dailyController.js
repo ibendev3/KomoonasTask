@@ -1,51 +1,154 @@
 komoonasStats.controller('DailyController',
     function DailyController($scope, $log, $http) {
-        var data = google.visualization.arrayToDataTable([
-            ['Year', 'Sales', 'Expenses'],
-            ['2004', 1000, 400],
-            ['2005', 1170, 460],
-            ['2006', 660, 1120],
-            ['2007', 1030, 540]
-        ]);
-        var options = {
-            title: 'Company Performance',
-            animation:{
-                duration: 1000,
-                easing: 'out'
-            }
-        };
+        $scope.chosenTags = new Array();
 
-        $scope.chartTypes = [
-            {typeName: 'LineChart', typeValue: '1'},
-            {typeName: 'BarChart', typeValue: '2'},
-            {typeName: 'ColumnChart', typeValue: '3'},
-            {typeName: 'PieChart', typeValue: '4'}
-        ];
-
-        var chart = {};
-        chart.data = data;
-        chart.options = options;
-        chart.type = $scope.chartTypes[0].typeValue;
-
-        var username = 'aplotkin';
-        var password = 'malaysia';
-
-        var responsePromise = $http.get("http://www.komoona.com:8080/sample_data.json", {headers: {'Authorization': 'Basic ' + btoa(username + ":" + password)}});
+        var responsePromise = $http.get("http://localhost:8081/kstats");
 
         responsePromise.success(function(data, status, headers, config) {
-            alert("Success")
+           $scope.originalStatisticData = data;
+           $scope.tagsList = getTagsAndDatesDataArranged(data, $scope);
+           $scope.data = buildDailyVolData(data, $scope.tagsList, $scope.dayDisplayed, $scope);
+           $scope.chart = buildDailyLinareChart($scope.data, $scope.chartTypes);
+
         });
         responsePromise.error(function(data, status, headers, config) {
             alert("AJAX failed!");
         });
 
-        $scope.selectChart = function(type) {
-            $log.info("Chart type has been change");
-            $scope.chart.type = type.typeValue;
+        $scope.selectDay = function(type) {
+            $log.info("Chart type has been change to " + type);
+            $scope.dayDisplayed = type;
+
         }
-        $scope.drawChart = function() {
+        $scope.$watch('dayDisplayed', function (n, o) {
+            if (n == undefined)
+                return;
+
+            $scope.data = buildDailyVolData($scope.originalStatisticData,  $scope.dayDisplayed, $scope);
+            $scope.chart.data = $scope.data;
+        }, true);
+
+
+        $scope.$watch('chart', function (n, o) {
+            if (n == undefined)
+                return;
             $scope.drawnChart.draw($scope.chart.data, $scope.chart.options);
-        }
-        $scope.chartType = $scope.chartTypes[0];
-        $scope.chart = chart;
+
+        }, true);
+
+
+
+
     });
+
+function buildDailyVolData(originalStatisticData, dayDisplayed, $scope) {
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'Hour a Day');
+    data.addColumn('number', 'Hours per Day');
+    data.addColumn('number', 'Hours per week');
+    data.addColumn('number', 'Hours per month');
+
+    var intTime;
+    for (intTime = 0; intTime < 24; intTime++) {
+        data.addRows([buildColumnObject(intTime, originalStatisticData, dayDisplayed, $scope)]);
+    }
+
+    return data;
+
+}
+
+
+function buildColumnObject(intTime, originalStatisticData, dayDisplayed, $scope) {
+    var served = 0, inited  = 0, def = 0;
+    if ($scope.chosenTags == undefined || $scope.chosenTags.length == 0) {
+        var tagList = $scope.tagsList;
+    } else  {
+        var tagList = _.flatten($scope.chosenTags);
+    }
+
+    for (tag in tagList) {
+            stringT = numericTimeToString(intTime);
+            if (originalStatisticData[tagList[tag]] == undefined) {
+                continue; // Not reasonable [Means there is no data for this tag]
+            }
+            if (originalStatisticData[tagList[tag]][dayDisplayed] == undefined) {
+                continue; // Reasonable - [Means a specific tag has no data for a certain date]
+            }
+            if (originalStatisticData[tagList[tag]][dayDisplayed][stringT]== undefined) {
+                continue; // Reasonable - [Means this tag has missing data for this specific hour]
+            }
+            served += originalStatisticData[tagList[tag]][dayDisplayed][stringT].served;
+            inited += originalStatisticData[tagList[tag]][dayDisplayed][stringT].inited;
+            def += originalStatisticData[tagList[tag]][dayDisplayed][stringT].def;
+    }
+    return [intTime, served, inited, def];
+}
+
+function buildDailyLinareChart(data) {
+    var chart = {};
+    var options = {
+        'legend':'left',
+        'title':'My Big Pie Chart',
+        'is3D':true,
+        'width':1200,
+        'height':500,
+        'isStacked': true,
+        hAxis: {title: 'Hour in the day', titleTextStyle: {color: 'red'}, gridlines: { count: 24 } },
+        vAxis: {title: 'Requests Inited', viewWindow:{ min : 20000 }},
+        bar: { groupWidth: '35%' },
+        animation: {
+            duration: 1000,
+            easing: 'out'
+        }
+    };
+
+    chart.data = data;
+    chart.options = options;
+
+    return chart;
+
+}
+
+function getTagsAndDatesDataArranged(data, $scope) {
+    var retTags = {};
+    var retDays = {};
+    var index = 0, jdex = 0;
+    for (key in data) {
+        retTags[index++] = key;
+        for (day in data[key]) {
+            retDays[jdex++] = day;
+        }
+    }
+    $scope.daysData = _.unique(retDays); // A List of uniq days we have data for
+    $scope.dayDisplayed = $scope.daysData[$scope.daysData.length-1];
+    return retTags;
+
+}
+
+function numericTimeToString(intTime) {
+    if (intTime > 23 || intTime < 0) {
+        console.log("Invalid time received, returning midnight");
+        return '00:00:00';
+    }
+
+    if (intTime < 10) {
+        return '0' + intTime + ':00:00';
+    } else return intTime + ":00:00";
+}
+
+function tagIdSelectionChange(element, toAdd, $scope) {
+    if (toAdd)
+        $scope.chosenTags.push(element);
+    else {
+        var index = $scope.chosenTags.indexOf(element);
+        if (index > -1) {
+            $scope.chosenTags.splice(index, 1)
+        }
+    }
+
+    $scope.data = buildDailyVolData($scope.originalStatisticData,  $scope.dayDisplayed, $scope);
+    $scope.chart.data = $scope.data;
+    $scope.drawnChart.draw($scope.chart.data, $scope.chart.options);
+
+}

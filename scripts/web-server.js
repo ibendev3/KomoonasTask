@@ -7,7 +7,7 @@ var util = require('util'),
     events = require('events'),
     restserver = require('./rest-api');;
 
-var DEFAULT_PORT = 8000;
+var DEFAULT_PORT = 9000;
 
 function main(argv) {
     new HttpServer({

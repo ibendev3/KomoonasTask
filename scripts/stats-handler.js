@@ -1,16 +1,18 @@
 var NodeCache = require( "node-cache" );
 var http = require('http');
+var localJson = require('./sample_data.json');
+
 
 var StatisticsCache = new NodeCache( { stdTTL: 0, checkperiod: 0 } );
-retrieveKomoonasData();
-
+//retrieveKomoonasData();
+analyzeStatistics(localJson);
 function retrieveKomoonasData() {
     console.log("Start retrieving Komoona's stats");
     var username = 'aplotkin';
     var password = 'malaysia';
 
     var options = {
-        host: 'www.komoona.com',
+        host: '23.23.150.175',
         port: 8080,
         path: '/sample_data.json',
         headers: {
@@ -27,31 +29,7 @@ function retrieveKomoonasData() {
 
         res.on('end', function () {
             console.log("Retrieving statistic has ended successfully");
-            var JsonAsObject = JSON.parse(body);
-            var result = {};
-            var i;
-            console.log("lenght is " + JsonAsObject.length);
-            for(i = 0; i < JsonAsObject.length; i++) {
-                if (result[JsonAsObject[i].tagid] == undefined) {
-                    result[JsonAsObject[i].tagid] = {};
-                    console.log("Tag id added to object: " + JsonAsObject[i].tagid )
-                }
-                if (result[JsonAsObject[i].tagid][JsonAsObject[i].time] == undefined)
-                    result[JsonAsObject[i].tagid][JsonAsObject[i].time] = {};
-                if (result[JsonAsObject[i].tagid][JsonAsObject[i].time].served == undefined)
-                    result[JsonAsObject[i].tagid][JsonAsObject[i].time].served = 0
-                if (result[JsonAsObject[i].tagid][JsonAsObject[i].time].inited == undefined)
-                    result[JsonAsObject[i].tagid][JsonAsObject[i].time].inited = 0
-                if (result[JsonAsObject[i].tagid][JsonAsObject[i].time].def == undefined)
-                    result[JsonAsObject[i].tagid][JsonAsObject[i].time].def = 0
-
-                result[JsonAsObject[i].tagid][JsonAsObject[i].time].served += JsonAsObject[i].served;
-                result[JsonAsObject[i].tagid][JsonAsObject[i].time].inited += JsonAsObject[i].inited;
-                result[JsonAsObject[i].tagid][JsonAsObject[i].time].def += JsonAsObject[i].def;
-            }
-            StatisticsCache.set("statsJson", result, function(err, success) {
-                console.log("JSON Object has been added to cache");
-            });
+            analyzeStatistics(body);
 
         })
     }).on('error', function (e) {
@@ -60,12 +38,41 @@ function retrieveKomoonasData() {
 }
 function getJson() {
    var StatsObject =  StatisticsCache.get("statsJson");
-//    var count = 0;
-//    for (var x in StatsObject.statsJson) {
-//        count++;
-//    }
-    //console.log("Items are " + count);
     return StatsObject.statsJson;
+}
+
+function analyzeStatistics(body) {
+    var JsonAsObject = body; //JSON.parse(body);
+    var result = {};
+    var i;
+    console.log("lenght is " + JsonAsObject.length);
+    for(i = 0; i < JsonAsObject.length; i++) {
+
+        var date = JsonAsObject[i].time.split(" ")[0];
+        var time = JsonAsObject[i].time.split(" ")[1];
+        var tagid = JsonAsObject[i].tagid;
+        if (result[tagid] == undefined) {
+            result[tagid] = {};
+            console.log("Tag id added to object: " + JsonAsObject[i].tagid )
+        }
+        if (result[tagid][date] == undefined)
+            result[tagid][date] = {};
+        if (result[tagid][date][time] == undefined)
+            result[tagid][date][time] = {};
+        if (result[tagid][date][time].served == undefined)
+            result[tagid][date][time].served = 0
+        if (result[tagid][date][time].inited == undefined)
+            result[tagid][date][time].inited = 0
+        if (result[tagid][date][time].def == undefined)
+            result[tagid][date][time].def = 0
+
+        result[JsonAsObject[i].tagid][date][time].served += JsonAsObject[i].served;
+        result[JsonAsObject[i].tagid][date][time].inited += JsonAsObject[i].inited;
+        result[JsonAsObject[i].tagid][date][time].def += JsonAsObject[i].def;
+    }
+    StatisticsCache.set("statsJson", result, function(err, success) {
+        console.log("JSON Object has been added to cache");
+    });
 }
 
 module.exports.getJson = getJson;
