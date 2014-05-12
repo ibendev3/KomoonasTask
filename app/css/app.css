@@ -75,3 +75,7 @@ footer {
     left: 30%;
 
 }
+.container-fluid {
+    width: 1500px;
+    margin-left: 0;
+}

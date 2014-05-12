@@ -20,7 +20,7 @@ komoonasStats.controller('ChainController',
             $scope.chosenTag = type;
 
         }
-
+        console.log($scope.tagsList);
         $scope.$watch('[chosenTag, maxRequests]', function (n, o) {
             if (n == undefined || n === o)
                 return;
