@@ -17,7 +17,7 @@ komoonasStats.directive('multiSelect', function () {
                             if (options.length == 0 || options.length == element.context.length ) {
                                 return 'Tags Filtes: All Selected <b class="caret"></b>';
                             }
-                            else if (options.length > 2) {
+                            else if (options.length > 1) {
                                 return options.length + ' selected  <b class="caret"></b>';
                             }
                             else {

@@ -43,7 +43,7 @@ function buildChainLinareChart(data) {
     var chart = {};
     var options = {
         'legend':'bottom',
-        'title':'Customer Statistics - Daily Volume',
+        'title':'Customer Statistics - Chains View',
         'is3D':true,
         'width':1200,
         'height':500,

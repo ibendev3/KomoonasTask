@@ -4,23 +4,23 @@
     <p class="lead">
         Handling with the assignment and it's details was pretty challenging, giving the amount of time, the unfamiliar area of
         web dynamic charts and the large amount of data coming from distanced resource needed to be analyzed at some point. <br/>
-        With that said, I had to do some pre-coding research and design. the decisions I took at start has changed with the development but they made the
-        assignment clearer.
+        With that said, I had to do some pre-coding research and design. the decisions I took at the beginning has changed with the development but they made the
+        assignment become more clear.
     <p>
 
     <h4>Architecture</h4>
     <p class="lead">
         The application is running under <a href="http://nodejs.org/">NodeJS</a> web server, and architect to be a single-page application using the capabilities of
-        the front end solution - <a href="https://angularjs.org/">AngularJS</a> - taking care of client-side routing, data binding and dynamic events occurring in the page. The visualization charts are being handled by an
-        open source library by Google (<a href="https://developers.google.com/chart/">Google Charts</a>) which I chose because after testing few other options(D3, Charts.js) Google's was the easiest to customise to a specific need and
-        has to best support with Angular, but still - I'm not 100% sure it's the best solution for a larger application. Look and Feel is with components and styling of <a href="http://getbootstrap.com/">Twitter-Bootstrap</a> Which I
+        the front end solution - <a href="https://angularjs.org/">AngularJS</a> - Taking care of client-side routing, data binding and dynamic events occurring in the page. The visualization charts are being handled by an
+        open source library by Google (<a href="https://developers.google.com/chart/">Google Charts</a>) which I chose because after testing a few other options(D3, Charts.js) Google's was the easiest to customise to a specific need and
+        has the best support with Angular, but still - I'm not 100% sure it's the best solution for a larger application. Look and feel is with components and styling of <a href="http://getbootstrap.com/">Twitter-Bootstrap</a> Which I
         find amazing when you need a quick layout and objects on screen.
     </p>
 
     <h4>Data flow</h4>
-    <p class="lead">The data flow is the following steps:
+    <p class="lead">The data flow performed by the following:
     <ol class="lead">
-        <li>Webserver is stating</li>
+        <li>Webserver is starting</li>
         <li>Webserver send a request to the DataSource holding the JSON file</li>
         <li>Data is parsed, analyzed, set to relevant data structures and cached on the server side</li>
         <li>When needed on the page - client call the data from the server (where it cached and minimized)</li>
@@ -29,26 +29,26 @@
     </p>
     <h4>Visualization</h4>
     <p class="lead">The application present 2 pages of different visualization:<br/>
-        The first one is the Daily volume - It display a Linear chart of a chosen date and the data displayed compare between
-        inited, served and default on every hour of the day. Tag IDs can be filtered or display all.
+        The first one is the daily volume - It display a linear chart of a chosen date and the data displayed compare between
+        inited, served and default on hour during the day. Tag ids can be filtered or display all.
         <br/> The second one is displaying data regarding strategies used by Komoona algorithms, for a chosen tag it gives a view of
         all strategies attempted and what happened with the requests. here you can filter by amount of requests inited (gives the ability to
-        observe on strategies with low usage.
+        observe on strategies with low usage).
 
 
     </p>
     <h4>Pitfall</h4>
     <p class="lead">
         The most challenging pitfall with the assignment was dealing with the data, coming from a distanced source, all at once and need to be structured in a way
-        I can "play" with easily once an event is triggered on the page. I think that if I had a control over the data source I would probably load it in chunks of days, though
-        that if the historical data is static it only needed to be loaded once when the server launches, and the just adding the offset data every new hour.
-        <br/>The second pitfall was choosing and building the environment, At first I wanted to save time so I chose to work on a client side application only, But I wasn't satisfied
-        with the performance of the data analytic, So I had to add a server to process the data once and not per request.
+        I could "play" with easily once an event is triggered on the page. I think that if I had a control over the data source I would probably load it in chunks of days, though
+        that if the historical data is static, it only needs to be loaded once, when the server launches, and then, just adding the offset data every single hour.
+        <br/>The second pitfall was choosing and building the environment, at first I wanted to save time so I chose to work on a client side application only, But I wasn't satisfied
+        with the performance of the data analytic, so I had to add a server in order to process the data only once, not per request.
     </p>
     <h4>If I had more time?</h4>
     <p class="lead">
-    Plenty can be done with extra time. I think that with few more hours i'd clear some areas I'm not satisfied with - Extreme cases check on code, Negative feedback to user when needed, Interactive display on items click.
-    With few more days extra charts could be added on both pages, charts that can minimize the scope of the analytics to a specific item that the user choose and I guess that a user management mechanism is the first need, then data can be displayed dynamically according to the user.
+    Plenty can be done with extra time. I think that with a few more hours i'd clear some areas I'm not satisfied with - Extreme cases check on code, negative feedback to user if needed, interactive display on items click.
+    With a few more days, charts could be added on both pages, charts that can minimize the scope of the analytics to a specific item that the user choose. A user management mechanism is the first need, then, data can be displayed dynamically according to the user.
     </p>
 
     <H4>Ben</H4>

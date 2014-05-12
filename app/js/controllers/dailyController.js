@@ -95,7 +95,7 @@ function buildDailyLinareChart(data) {
         'width':1200,
         'height':500,
         'isStacked': true,
-        hAxis: {title: 'Hour in the day', titleTextStyle: {color: 'red'}, gridlines: { count: 24 } },
+        hAxis: {title: 'Hour', gridlines: { count: 24 } },
         vAxis: {title: 'Requests Inited', minValue: 0},
         bar: { groupWidth: '35%' },
         animation: {
