@@ -1,12 +1,18 @@
 {
-  "name": "angularjs-seed",
+  "name": "Komoona-Statistics",
   "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
-  "devDependencies": {
-    "phantomjs" : "~1.9",
-    "karma" : "~0.10",
-    "karma-junit-reporter" : "~0.1",
-    "karma-jasmine" : "~0.1",
-    "karma-ng-scenario" : "~0.1"
-  }
+  "version": "0.0.1",
+  "main": "scripts/web-server.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "node-cache": "~1.0.0",
+    "restify": "~2.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }

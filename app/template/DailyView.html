@@ -1,21 +1,22 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 customer-panel">
+        <h4>Customer Panel</h4>
 
-        <form>
-            <label for="dayDisplayed">Choose a date:</label>
-            <select class="form-control select-resize" ng-change="selectDay(dayDisplayed)" id="dayDisplayed"
-                    name="dayDisplayed" ng-model="dayDisplayed"
-                    ng-options="c for c in daysData">
+            <form class="panelForm">
+                <label for="dayDisplayed">Choose a date:</label>
+                <select class="form-control select-resize" ng-change="selectDay(dayDisplayed)" id="dayDisplayed"
+                        name="dayDisplayed" ng-model="dayDisplayed"
+                        ng-options="c for c in daysData">
 
-            </select>
-            </form><br/>
-            <label for="tagsSelect">Choose tags:</label><br/>
+                </select>
+                <br/>
+                <label for="tagsSelect">Choose tags:</label><br/>
 
-            <select class="multiselect form-control" id="tagIds" multiple="multiple"  id="tagsSelect" multi-select>
-                <option ng-repeat="tag in tagsList" value="{{tag}}">{{tag}}</option>
-            </select>
-        </form>
+                <select class="multiselect multi-select-re" id="tagIds" multiple="multiple"  id="tagsSelect" multi-select>
+                    <option ng-repeat="tag in tagsList" value="{{tag}}">{{tag}}</option>
+                </select>
+            </form>
         </div>
         <div class="col-md-9">
 

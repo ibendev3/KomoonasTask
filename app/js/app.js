@@ -18,6 +18,9 @@ var komoonasStats = angular.module('KomoonaStatsApp', ['ngRoute'])
             {
                 templateUrl: 'template/DailyView.html',
                 controller: 'DailyController'
+            }).when('/chainview', {
+                templateUrl: 'template/ChainVisual.html',
+                controller: 'ChainController'
             }).otherwise({
                 redirectTo: '/'
             });

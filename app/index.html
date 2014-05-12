@@ -16,7 +16,7 @@
         <ul class="nav nav-tabs" style="margin-bottom: 15px;">
             <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
             <li ng-class="{ active: isActive('/dailyView')}"><a href="/dailyView">Daily Volume</a></li>
-            <li ng-class="{ active: isActive('/cats')}"><a href="/other">Other Volume</a></li>
+            <li ng-class="{ active: isActive('/chainView')}"><a href="/chainview">Other Volume</a></li>
         </ul>
     </div>
 
@@ -27,7 +27,7 @@
     </ng-view>
 
 </div>
-
+<footer>Komoonas Statistics Assignment - Submitted by <a href="mailto:bend0303@gmail.com">Ben Diamant</a></footer>
 <!-- 3rd party libs -->
 <script src="/lib/jquery.min.js"></script>
 <script src="/lib/bootstrap.min.js"></script>
@@ -45,6 +45,7 @@
 <!-- Komoonas App Partial Controllers -->
 <script src="/js/controllers/dailyController.js"></script>
 <script src="/js/controllers/headerController.js"></script>
+<script src="/js/controllers/chainController.js"></script>
 
 <!-- Komoonas App Directives -->
 <script src="/js/directives/directives.js"></script>

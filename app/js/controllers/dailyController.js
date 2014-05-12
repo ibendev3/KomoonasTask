@@ -6,9 +6,10 @@ komoonasStats.controller('DailyController',
 
         responsePromise.success(function(data, status, headers, config) {
            $scope.originalStatisticData = data;
+           $scope.chartType = 2;
            $scope.tagsList = getTagsAndDatesDataArranged(data, $scope);
            $scope.data = buildDailyVolData(data, $scope.tagsList, $scope.dayDisplayed, $scope);
-           $scope.chart = buildDailyLinareChart($scope.data, $scope.chartTypes);
+           $scope.chart = buildDailyLinareChart($scope.data);
 
         });
         responsePromise.error(function(data, status, headers, config) {
@@ -45,9 +46,9 @@ function buildDailyVolData(originalStatisticData, dayDisplayed, $scope) {
 
     var data = new google.visualization.DataTable();
     data.addColumn('number', 'Hour a Day');
-    data.addColumn('number', 'Hours per Day');
-    data.addColumn('number', 'Hours per week');
-    data.addColumn('number', 'Hours per month');
+    data.addColumn('number', 'Inited Requests');
+    data.addColumn('number', 'Served');
+    data.addColumn('number', 'Default');
 
     var intTime;
     for (intTime = 0; intTime < 24; intTime++) {
@@ -82,14 +83,14 @@ function buildColumnObject(intTime, originalStatisticData, dayDisplayed, $scope)
             inited += originalStatisticData[tagList[tag]][dayDisplayed][stringT].inited;
             def += originalStatisticData[tagList[tag]][dayDisplayed][stringT].def;
     }
-    return [intTime, served, inited, def];
+    return [intTime, inited,served, def];
 }
 
 function buildDailyLinareChart(data) {
     var chart = {};
     var options = {
-        'legend':'left',
-        'title':'My Big Pie Chart',
+        'legend':'bottom',
+        'title':'Customer Statistics - Daily Volume',
         'is3D':true,
         'width':1200,
         'height':500,

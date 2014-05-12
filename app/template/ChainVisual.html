@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 customer-panel">
+            <h4>Customer Panel</h4>
+
+            <form class="panelForm">
+                <label for="chosenTag">Choose a tag:</label>
+                <select class="form-control" id="chosenTag" ng-model="chosenTag"  ng-options="value as value for (key , value) in tagsList"></select>
+                <br/>
+                <label for="maxRequests">Limit max requests</label>
+                <input type="number" class="form-control numberPicker" ng-model="maxRequests" id="maxRequests" step="10" min="0" title="Limit the number of request you view, can assist with analyzing the use of small strategies. put 0 for unlimited">
+            </form>
+        </div>
+        <div class="col-md-9">
+
+            <div id="chaindiv" google-chart>
+
+
+            </div>
+        </div>
+    </div>
+</div>
