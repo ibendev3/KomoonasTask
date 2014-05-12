@@ -2,7 +2,7 @@ komoonasStats.controller('DailyController',
     function DailyController($scope, $log, $http) {
         $scope.chosenTags = new Array();
 
-        var responsePromise = $http.get("http://localhost:8081/kstats");
+        var responsePromise = $http.get("http://127.0.0.1:8081/kstats");
 
         responsePromise.success(function(data, status, headers, config) {
            $scope.originalStatisticData = data;
