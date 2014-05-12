@@ -3,7 +3,7 @@ komoonasStats.controller('ChainController',
     function ($scope, $http) {
         $scope.chartType = 1; //
         $scope.maxRequests = 0;
-        var responsePromise = $http.get("http://komstats.cloudapp.net:81/chainstats");
+        var responsePromise = $http.get("/chain");
 
         responsePromise.success(function(data, status, headers, config) {
             $scope.originalStatisticData = data;

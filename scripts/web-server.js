@@ -5,7 +5,7 @@ var util = require('util'),
     fs = require('fs'),
     url = require('url'),
     events = require('events'),
-    restserver = require('./rest-api');;
+    statisticsHandler = require('./stats-handler');
 
 var DEFAULT_PORT = 9000;
 
@@ -95,6 +95,12 @@ StaticServlet.prototype.handleRequest = function (req, res) {
         return String.fromCharCode(parseInt(hex, 16));
     });
     var parts = path.split('/');
+    if (parts[1] == 'kstats') {
+        return self.kstatsJson(req, res, path);
+
+    } else if (parts[1] == 'chains') {
+        return self.chainstatsJson(req, res, path);
+    }
     if (parts[parts.length - 1].charAt(0) === '.')
         return self.sendForbidden_(req, res, path);
 
@@ -186,6 +192,16 @@ StaticServlet.prototype.sendMissing_ = function (req, res, path) {
     util.puts('404 Not Found: ' + path);
 };
 
+StaticServlet.prototype.kstatsJson = function (req, res, path) {
+    res.write(JSON.stringify(statisticsHandler.getDailyJson()));
+    res.end();
+
+}
+StaticServlet.prototype.chainstatsJson = function (req, res, path) {
+    res.write(JSON.stringify(statisticsHandler.getCahinStats()));
+    res.end();
+
+}
 StaticServlet.prototype.sendForbidden_ = function (req, res, path) {
     path = path.substring(1);
     res.writeHead(403, {
