@@ -4,7 +4,7 @@ var statisticsHandler = require('./stats-handler');
 
 function respondWithDailyStats(req, res, next) {
     res.setHeader('content-type', 'text/json');
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9000');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
@@ -13,7 +13,7 @@ function respondWithDailyStats(req, res, next) {
 }
 function respondWithChainStats(req, res, next) {
     res.setHeader('content-type', 'text/json');
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9000');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
