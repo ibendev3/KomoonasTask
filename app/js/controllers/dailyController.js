@@ -1,7 +1,7 @@
 komoonasStats.controller('DailyController',
     function DailyController($scope, $log, $http) {
         $scope.chosenTags = new Array();
-
+        $scope.doneLoading = false;
         var responsePromise = $http.get("/kstats");
 
         responsePromise.success(function(data, status, headers, config) {

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mainContainer" style="visibility: hidden;">
     <div class="row">
         <div class="col-md-2 customer-panel">
         <h4>Customer Panel</h4>
@@ -14,7 +14,7 @@
                 <label for="tagsSelect">Choose tags:</label><br/>
 
                 <select class="multiselect multi-select-re" id="tagIds" multiple="multiple"  id="tagsSelect" multi-select>
-                    <option ng-repeat="tag in tagsList" value="{{tag}}">{{tag}}</option>
+                    <option panel-hider ng-repeat="tag in tagsList" value="{{tag}}">{{tag}}</option>
                 </select>
             </form>
         </div>

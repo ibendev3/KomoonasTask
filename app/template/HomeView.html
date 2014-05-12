@@ -17,21 +17,31 @@
         find amazing when you need a quick layout and objects on screen.
     </p>
 
-     <h4>Data flow</h4>
+    <h4>Data flow</h4>
     <p class="lead">The data flow is the following steps:
     <ol class="lead">
         <li>Webserver is stating</li>
-        <li>Webserver send a request to the datasource holding the JSON file</li>
+        <li>Webserver send a request to the DataSource holding the JSON file</li>
         <li>Data is parsed, analyzed, set to relevant data structures and cached on the server side</li>
-        <li>When needed on the page - client call the data from the server (where it cached and smalled)</li>
+        <li>When needed on the page - client call the data from the server (where it cached and minimized)</li>
         <li>Data is injected to the client objects and charts</li>
     </ol>
+    </p>
+    <h4>Visualization</h4>
+    <p class="lead">The application present 2 pages of different visualization:<br/>
+        The first one is the Daily volume - It display a Linear chart of a chosen date and the data displayed compare between
+        inited, served and default on every hour of the day. Tag IDs can be filtered or display all.
+        <br/> The second one is displaying data regarding strategies used by Komoona algorithms, for a chosen tag it gives a view of
+        all strategies attempted and what happened with the requests. here you can filter by amount of requests inited (gives the ability to
+        observe on strategies with low usage.
+
+
     </p>
     <h4>Pitfall</h4>
     <p class="lead">
         The most challenging pitfall with the assignment was dealing with the data, coming from a distanced source, all at once and need to be structured in a way
         I can "play" with easily once an event is triggered on the page. I think that if I had a control over the data source I would probably load it in chunks of days, though
-        that if the historical data is static it only needed to be loaded once when the sever lunches, and the just adding the offset data every new hour.
+        that if the historical data is static it only needed to be loaded once when the server launches, and the just adding the offset data every new hour.
         <br/>The second pitfall was choosing and building the environment, At first I wanted to save time so I chose to work on a client side application only, But I wasn't satisfied
         with the performance of the data analytic, So I had to add a server to process the data once and not per request.
     </p>
