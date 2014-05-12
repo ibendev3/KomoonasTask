@@ -1,14 +1,28 @@
-<select class="form-control" ng-change="selectDay(dayDisplayed)" id="dayDisplayed" ng-model="dayDisplayed"
-        ng-options="c for c in daysData">
-</select>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
 
-<select class="multiselect" id="tagIds" multiple="multiple" multi-select>
-    <option ng-repeat="tag in tagsList" value="{{tag}}">{{tag}}</option>
-</select>
+        <form>
+            <label for="dayDisplayed">Choose a date:</label>
+            <select class="form-control select-resize" ng-change="selectDay(dayDisplayed)" id="dayDisplayed"
+                    name="dayDisplayed" ng-model="dayDisplayed"
+                    ng-options="c for c in daysData">
+
+            </select>
+            </form><br/>
+            <label for="tagsSelect">Choose tags:</label><br/>
+
+            <select class="multiselect form-control" id="tagIds" multiple="multiple"  id="tagsSelect" multi-select>
+                <option ng-repeat="tag in tagsList" value="{{tag}}">{{tag}}</option>
+            </select>
+        </form>
+        </div>
+        <div class="col-md-9">
+
+        <div id="chartdiv" google-chart>
 
 
-
-<div id="chartdiv" google-chart>
-
-
+        </div>
+            </div>
+    </div>
 </div>
