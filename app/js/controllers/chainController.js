@@ -3,7 +3,7 @@ komoonasStats.controller('ChainController',
     function ($scope, $http) {
         $scope.chartType = 1; //
         $scope.maxRequests = 0;
-        var responsePromise = $http.get("/chain");
+        var responsePromise = $http.get("/chains");
 
         responsePromise.success(function(data, status, headers, config) {
             $scope.originalStatisticData = data;

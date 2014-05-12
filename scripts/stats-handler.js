@@ -1,40 +1,42 @@
 var NodeCache = require( "node-cache" );
 var http = require('http');
-var localJson = require('./sample_data.json');
+var iniparser = require('iniparser');
 
 
 var StatisticsCache = new NodeCache( { stdTTL: 0, checkperiod: 0 } );
-//retrieveKomoonasData();
-analyzeStatistics(localJson);
+retrieveKomoonasData();
 function retrieveKomoonasData() {
     console.log("Start retrieving Komoona's stats");
-    var username = 'aplotkin';
-    var password = 'malaysia';
-
-    var options = {
-        host: '23.23.150.175',
-        port: 8080,
-        path: '/sample_data.json',
-        headers: {
-            'Authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+    iniparser.parse('../scripts/props/datasource.ini', function(err,data){
+        if (err) {
+            console.log(err);
         }
-    };
+        var options = {
+            host: data.host,
+            port: data.port,
+            path: data.path,
+            headers: {
+                'Authorization': 'Basic ' + new Buffer(data.user + ':' + data.pass).toString('base64')
+            }
+        };
+        http.get(options, function (res) {
+            var body = '';
 
-    http.get(options, function (res) {
-        var body = '';
+            res.on('data', function (chunk) {
+                body += chunk;
+            });
 
-        res.on('data', function (chunk) {
-            body += chunk;
+            res.on('end', function () {
+                console.log("Retrieving statistic has ended successfully");
+                analyzeStatistics(body);
+
+            })
+        }).on('error', function (e) {
+            console.log("Got error: ", e);
         });
-
-        res.on('end', function () {
-            console.log("Retrieving statistic has ended successfully");
-            analyzeStatistics(body);
-
-        })
-    }).on('error', function (e) {
-        console.log("Got error: ", e);
     });
+
+
 }
 function getDailyJson() {
    var StatsObject =  StatisticsCache.get("statsJson");
@@ -49,8 +51,8 @@ function getCahinStats() {
 function buildDailyStats(JsonAsObject) {
     var result = {};
     var i;
+    JsonAsObject = JSON.parse(JsonAsObject);
     for(i = 0; i < JsonAsObject.length; i++) {
-
         var date = JsonAsObject[i].time.split(" ")[0];
         var time = JsonAsObject[i].time.split(" ")[1];
         var tagid = JsonAsObject[i].tagid;
@@ -77,6 +79,7 @@ function buildDailyStats(JsonAsObject) {
 function buildChainStats(JsonAsObject) {
     var result = {};
     var i;
+    JsonAsObject = JSON.parse(JsonAsObject);
     for(i = 0; i < JsonAsObject.length; i++) {
         var tagid = JsonAsObject[i].tagid;
         var chain = JsonAsObject[i].chain;
