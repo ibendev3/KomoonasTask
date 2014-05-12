@@ -44,7 +44,6 @@ HttpServer.prototype.start = function (port) {
     this.port = port;
     this.server.listen(port);
     util.puts('Http Server running at http://localhost:' + port + '/');
-    restserver.start();
 };
 
 HttpServer.prototype.parseUrl_ = function (urlString) {
